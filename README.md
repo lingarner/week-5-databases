@@ -4,7 +4,7 @@ If you look in the model folder in the index.js, that is where we are connecting
 
 I want to create a website for my dad to host his hikinh pictures on, but in order to access those picture I want to be able to grab them from a databse dynamically.
 
-[Software Demo Video](http://youtube.link.goes.here)
+[Database Demo Video](https://youtu.be/Xw2RQ-iHDRc)
 
 # Cloud Database
 
