@@ -7,6 +7,7 @@ async function getAllTrails() {
 
 const client = new MongoClient(uri);
 
+
 try {
     await client.connect();
 
@@ -50,6 +51,42 @@ async function getOneTrail(id){
     }
 }
 
+// allows user to add a new trail
+async function insertTrail(req) {
+    console.log('in insertTrail');
+    console.log(req);
+
+    const client = new MongoClient(uri);
+
+
+try {
+    await client.connect();
+
+    const database = client.db('hiking');
+    const collection = database.collection('trails');
+
+    
+    const dataInput = {
+    name: req.body.name,
+    location: req.body.location,
+    distance: req.body.distance,
+    elevationGain: req.body.elevationGain,
+    elevationLoss: req.body.elevationLoss,
+    lastHiked: req.body.lastHiked,
+    comments: req.body.comments
+    };
+    
+    const cursor = await collection.insertOne(await dataInput);
+    console.log(cursor)
+    
+    return cursor
+
+} catch (error) {
+    console.error('Error:', error);
+} finally{
+    await client.close()
+}
+}
 
 async function removeTrail(id){
 console.log(id)
@@ -76,4 +113,33 @@ try {
 
 }
 
-module.exports = {getAllTrails, getOneTrail}
+async function updateTrail(id, req){
+const client = new MongoClient(uri);
+
+try {
+    await client.connect();
+    
+    const database = client.db('hiking');
+    const collection = database.collection('trails');
+
+    const filter = { _id: new ObjectId(id) };
+    const update = {
+        name: req.body.name,
+        location: req.body.location,
+        distance: req.body.distance,
+        elevationGain: req.body.elevationGain,
+        elevationLoss: req.body.elevationLoss,
+        lastHiked: req.body.lastHiked,
+        comments: req.body.comments
+    
+    }
+    const contact = await collection.replaceOne(filter, update);
+    return contact.modifiedCount
+    
+} catch (error) {
+    console.error('Error:', error);
+} finally{
+    await client.close()
+}
+}
+module.exports = {getAllTrails, getOneTrail, insertTrail, removeTrail,  updateTrail}

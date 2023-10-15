@@ -17,6 +17,7 @@ The application runs using Node. THe start command (npm start) runs the server.j
 - Node.js
 - Express.js
 - Nodemon
+- Thunder Client (REST API)
 
 # Useful Websites
 
